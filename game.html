@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <style>
+        * {
+            margin: 0%;
+            padding: 0%;
+            overflow: hidden;
+        }
+
+        .game {
+            background-image: url(bg4.jpg);
+            background-size: cover;
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+            font-family: 'Courier New', monospace;
+        }
+
+        #gameover {
+            width: 100px;
+            height: 100px;
+
+
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 250px;
+
+
+            margin: auto;
+            visibility: hidden;
+        }
+
+        .player {
+            background-image: url(player2.png);
+            background-size: cover;
+            height: 541px;
+            width: 280px;
+            position: absolute;
+            bottom: 0;
+            left: 850px;
+
+
+        }
+
+        .obstacle {
+            background-image: url(att2.png);
+            background-size: cover;
+            height: 300px;
+            width: 280px;
+            position: absolute;
+            bottom: 0;
+            left: -10vw;
+
+        }
+
+        .animateplayer {
+            animation: aniplay 1s linear;
+        }
+
+        .animateobs {
+            animation: aniobs 4s linear infinite;
+        }
+
+        @keyframes aniplay {
+            0% {
+                bottom: 0;
+            }
+
+            50% {
+                bottom: 350px;
+            }
+
+            100% {
+                bottom: 0;
+            }
+        }
+
+        @keyframes aniobs {
+
+            0% {
+                left: -10vw;
+            }
+
+            100% {
+                left: 100vw;
+            }
+        }
+    </style>
+    <title>Game</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="score"></div>
+        <div class="game" id="bgname">
+            <div class="player" id="playername"></div>
+            <div class="obstacle animateobs" id="obstaclename"></div>
+            <div id="gameover" class="border rounded">
+                <h1 class="text-white">Game Over</h1>
+
+                <a class="btn btn-danger" href="animgame.html" role="button">Play Again</a>
+
+            </div>
+            <h1 class="text-white" id='score'></h1>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+        crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+    -->
+    <script>
+        var bgname = localStorage.getItem("bgname");
+        var urlbg = 'url(' + bgname + '.jpg)';
+        document.getElementById('bgname').style.backgroundImage = urlbg;
+
+        var playername = localStorage.getItem("playername");
+        var urlString = 'url(' + playername + '.png)';
+        document.getElementById('playername').style.backgroundImage = urlString;
+
+        var obstaclename = localStorage.getItem("obstaclename");
+        var urls = 'url(' + obstaclename + '.png)';
+        document.getElementById('obstaclename').style.backgroundImage = urls;
+
+        game = new Audio('game_song.ogg');
+        gameover = new Audio('gameover.mp3');
+        jump = new Audio('jump.flac');
+
+        setTimeout(() => {
+            game.play();
+        }, 1000);
+        game.loop = true;
+        score = 0;
+        document.onkeydown = function (e) {
+            console.log(e.keyCode);
+            if (e.keyCode == 38) {
+                player = document.querySelector('.player');
+                player.classList.add('animateplayer');
+                jump.play();
+                setTimeout(() => {
+                    player.classList.remove('animateplayer');
+                }, 700);
+            }
+
+        }
+
+        var player = document.querySelector('.player');
+        var obstacle = document.querySelector('.obstacle');
+        var message = document.getElementById('gameover');
+        cross = true;
+        setInterval(() => {
+            px = parseInt(window.getComputedStyle(player, null).getPropertyValue('left'));
+            py = parseInt(window.getComputedStyle(player, null).getPropertyValue('bottom'));
+            ox = parseInt(window.getComputedStyle(obstacle, null).getPropertyValue('left'));
+            oy = parseInt(window.getComputedStyle(obstacle, null).getPropertyValue('bottom'));
+
+            offsetX = Math.abs(px - ox);
+            offsetY = Math.abs(py - oy);
+            if (offsetX < 50 && offsetY < 50) {
+                message.style.visibility = 'visible';
+                obstacle.classList.remove('animateobs');
+                game.pause();
+                gameover.play();
+                setTimeout(() => {
+                    gameover.pause();
+                }, 1900);
+            }
+            else if (offsetX < 145 && cross) {
+                score += 1;
+                updateScore(score - 1);
+                cross = false;
+                setTimeout(() => {
+                    cross = true;
+                }, 1000);
+            }
+        }, 100);
+
+        function updateScore(score) {
+            document.getElementById('score').innerHTML = "Your Score: " + score;
+        }
+    </script>
+</body>
+
+</html>
