@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <style>
+        body {
+            background-image: url('weather.jpg');
+            font-family: 'Courier New', monospace;
+            background-repeat: repeat-x repeat-y;
+
+        }
+
+        #cityweather {
+            visibility: hidden;
+        }
+
+        .readable {
+            text-shadow: 0.05em 0 black,
+                0 0.05em black,
+                -0.05em 0 black,
+                0 -0.05em black,
+                -0.05em -0.05em black,
+                -0.05em 0.05em black,
+                0.05em -0.05em black,
+                0.05em 0.05em black;
+        }
+
+        .hourlycustom {
+            background: #C6FFDD;
+            /* fallback for old browsers */
+            background: -webkit-linear-gradient(to top, #f7797d, #FBD786, #C6FFDD);
+            /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to top, #f7797d, #FBD786, #C6FFDD);
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+        }
+
+        .headerbg {
+            background-image: url('headbg.jpg');
+            background-size: cover;
+        }
+
+        .daybg {
+            background: #43F3FE;
+            background: -webkit-radial-gradient(center, #43F3FE, #FFFFFF);
+            background: -moz-radial-gradient(center, #43F3FE, #FFFFFF);
+            background: radial-gradient(ellipse at center, #43F3FE, #FFFFFF);
+
+        }
+
+        .nightbg {
+            background: #181617;
+            background: -webkit-radial-gradient(center, #181617, #7E8080);
+            background: -moz-radial-gradient(center, #181617, #7E8080);
+            background: radial-gradient(ellipse at center, #181617, #7E8080);
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
+        }
+
+        .flexing {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+    <title>Weather App</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Projects</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="jsclock.html">jsclock</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="weatherapp.html">Weather</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="list.html">To-Do List</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Other Projects
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="anicar.html">Animated Car</a></li>
+                            <li><a class="dropdown-item" href="#">Game</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <br>
+
+
+    <div class="container bg-light w-50 mx-auto my-10 border rounded">
+        <label for="cityname" class="form-label ">City Name</label>
+        <input type="text" class="form-control w-50 d-inline" id="cityname" aria-describedby="emailHelp">
+        <img class="bd-placeholder-img " src="animated/weather.svg"></img>
+        <div id="emailHelp" class="form-text ">Enter the name of the city to predict weather</div>
+        <input class="btn btn-outline-primary d-inline" type="submit" value="Predict Weather" onclick="retrieve()" />
+        <br>
+        </br>
+    </div>
+    <br>
+    </br>
+    <div id="cityweather" class="flexing ">
+        <div class="bg-light border rounded-3 ms-5 daybg card readable text-white">
+            <h2 class="card-header">
+                Day
+            </h2>
+            <div class="card-body g-0 border rounded text-center">
+                <div>
+                    <img id="dayicon" class="bd-placeholder-img " width="150vw" height="150vw"></img>
+                </div>
+                <div>
+                    <h2 class="card-text" id="daytemp"></h2>
+                    <h4 class="card-text" id="daydesc"></h4>
+                </div>
+
+            </div>
+        </div>
+        <div class="card headerbg text-center bg-light ">
+
+
+            <h2 class="card-header readable text-white" id="loc">
+                Welcome to Weather Predictor!
+            </h2>
+            <div class="card-body row g-0 border rounded text-center readable text-white">
+                <div class="col">
+                    <h4 class="card-text" id="currtemp_C">
+                        </h2>
+                        <h5 class="card-text" id="currtemp_F">
+                    </h4>
+                    <h3 class="card-text" id="wt"></h3>
+                </div>
+                <div class="col-auto ">
+                    <img id="icon" class="bd-placeholder-img " width="100vw" height="100vw"></img>
+                </div>
+            </div>
+            <ul class="list-group list-group-horizontal-lg mx-auto ">
+                <li class="list-group-item " id="feellike"></li>
+                <li class="list-group-item " id="wind"></li>
+                <li class="list-group-item " id="barometer"></li>
+            </ul>
+            <ul class="list-group list-group-horizontal-lg mx-auto ">
+                <li class="list-group-item " id="visibility"></li>
+                <li class="list-group-item" id="humidity"></li>
+                <li class="list-group-item " id="dewpoint"></li>
+            </ul>
+            <ul class="list-group list-group-horizontal-lg mx-auto ">
+                <li class="list-group-item " id="sunrise"></li>
+                <li class="list-group-item " id="sunset"></li>
+
+            </ul>
+            <div class="card-footer readable text-white" id="currdate">
+
+            </div>
+        </div>
+        <div class="bg-light border rounded-3 me-5 nightbg card readable text-white">
+            <h2 class="card-header">
+                Night
+            </h2>
+            <div class="card-body g-0 border rounded text-center">
+                <div>
+                    <img id="nighticon" class="bd-placeholder-img " width="100vw" height="100vw"></img>
+                </div>
+                <div>
+                    <h2 class="card-text" id="nighttemp"></h2>
+                    <h4 class="card-text" id="nightdesc"></h4>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <br>
+    </br>
+
+    <h2 id="dailyhead" class="text-white readable"></h2>
+    <div class="row" id="daily">
+
+    </div>
+    <br>
+    <br>
+    <h2 id="hourlyhead" class="text-white readable"></h2>
+    <div class="row" id="hourly">
+    </div>
+    <br>
+    <br>
+
+
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+        crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+    -->
+    <script>
+        function retrieve() {
+            let city = document.getElementById("cityname").value;
+
+            fetch(`http://api.worldweatheronline.com/premium/v1/weather.ashx?key=54778d8b438f4b6fa88135212212803&q=${city}&format=json&showlocaltime=yes`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    document.getElementById("currdate").innerHTML = "Updated At: " + (data.data.time_zone[0].localtime);
+                    document.getElementById("loc").innerHTML = (data.data.request[0].query);
+                    document.getElementById("currtemp_C").innerHTML = (data.data.current_condition[0].temp_C) + "°C";
+                    document.getElementById("currtemp_F").innerHTML = (data.data.current_condition[0].temp_F) + "°F";
+
+                    document.getElementById("wt").innerHTML = (data.data.current_condition[0].weatherDesc[0].value);
+                    let url = "animated/" + data.data.current_condition[0].weatherDesc[0].value + ".svg";
+                    document.getElementById("icon").src = url;
+                    document.getElementById("feellike").innerHTML = "Feels like: " + (data.data.current_condition[0].FeelsLikeC) + "°C";
+                    document.getElementById("wind").innerHTML = "Wind: " + (data.data.current_condition[0].windspeedKmph) + "Kmph";
+                    document.getElementById("barometer").innerHTML = "Barometer: " + (data.data.current_condition[0].pressureInches) + "in";
+                    document.getElementById("visibility").innerHTML = "Visibility: " + (data.data.current_condition[0].visibilityMiles) + "mi";
+                    document.getElementById("humidity").innerHTML = "Humidity: " + (data.data.current_condition[0].humidity) + "%";
+                    document.getElementById("dewpoint").innerHTML = "UV index:" + (data.data.current_condition[0].uvIndex);
+                    document.getElementById("sunrise").innerHTML = "Sunrise:" + (data.data.weather[0].astronomy[0].sunrise);
+                    document.getElementById("sunset").innerHTML = "Sunset:" + (data.data.weather[0].astronomy[0].sunset);
+
+                    let dayurl = "animated/" + data.data.weather[0].hourly[3].weatherDesc[0].value + ".svg";
+                    document.getElementById("dayicon").src = dayurl;
+                    document.getElementById("daytemp").innerHTML = (data.data.weather[0].hourly[3].tempC) + "°C";
+                    document.getElementById("daydesc").innerHTML = (data.data.weather[0].hourly[3].weatherDesc[0].value);
+
+                    let nighturl = "animated/" + data.data.weather[0].hourly[6].weatherDesc[0].value + ".svg";
+                    document.getElementById("nighticon").src = nighturl;
+                    document.getElementById("nighttemp").innerHTML = (data.data.weather[0].hourly[6].tempC) + "°C";
+                    document.getElementById("nightdesc").innerHTML = (data.data.weather[0].hourly[6].weatherDesc[0].value);
+
+                    document.getElementById("cityweather").style.visibility = "visible";
+                    document.getElementById("dailyhead").innerHTML = "Daily Forecast:";
+                    let cardContainer;
+
+                    let createTaskCard = (task) => {
+
+                        let card = document.createElement('div');
+                        card.className = 'col ';
+
+                        let wdesc = document.createElement('h6');
+                        wdesc.innerText = task.hourly[4].weatherDesc[0].value;
+                        wdesc.className = 'card-text readable';
+
+                        let cardBody = document.createElement('div');
+                        cardBody.className = 'card-body card h-100 text-white shadow';
+                        var urlString = 'url(wtbg/' + task.hourly[4].weatherDesc[0].value + '.jpg)';
+                        urlString = encodeURIComponent(urlString.trim());
+                        cardBody.style.backgroundImage = urlString;
+                        cardBody.style.backgroundSize = "cover";
+
+                        let wdate = document.createElement('h5');
+                        var parts = task.date.split('-');
+                        var mydate = new Date(parts[0], parts[1] - 1, parts[2]);
+                        wdate.innerText = mydate.toDateString();
+                        wdate.className = 'card-title readable';
+
+                        let wimage = document.createElement('img');
+                        wimage.src = "animated/" + task.hourly[4].weatherDesc[0].value + ".svg";
+
+
+                        let wmaxtemp = document.createElement('h3');
+                        wmaxtemp.innerText = task.maxtempC + "°C";
+                        wmaxtemp.className = 'card-text readable';
+
+                        let wmintemp = document.createElement('h5');
+                        wmintemp.innerText = task.mintempC + "°C";
+                        wmintemp.className = 'card-text readable';
+
+                        cardBody.appendChild(wdate);
+                        cardBody.appendChild(wimage);
+                        cardBody.appendChild(wdesc);
+                        cardBody.appendChild(wmaxtemp);
+                        cardBody.appendChild(wmintemp);
+
+                        card.appendChild(cardBody);
+                        cardContainer.appendChild(card);
+
+                    }
+
+                    const newArray = data.data.weather.slice(1, 11);
+                    let initListOfTasks = () => {
+                        if (cardContainer) {
+                            document.getElementById('daily').replaceWith(cardContainer);
+                            return;
+                        }
+
+                        cardContainer = document.getElementById('daily');
+                        newArray.forEach((task) => {
+                            createTaskCard(task);
+                        });
+                    };
+
+                    initListOfTasks();
+
+                    document.getElementById("hourlyhead").innerHTML = "Hourly Forecast:";
+
+                    let hourlycardContainer;
+
+                    let createhourlyTaskCard = (hourlytask) => {
+
+                        let card = document.createElement('div');
+                        card.className = 'col';
+
+                        let cardBody = document.createElement('div');
+                        cardBody.className = 'card-body card h-100 hourlycustom shadow';
+
+                        let himage = document.createElement('img');
+                        himage.src = "animated/" + hourlytask.weatherDesc[0].value + ".svg";
+
+
+                        let htemp = document.createElement('h4');
+                        htemp.innerText = hourlytask.tempC + "°C";
+                        htemp.className = 'card-text';
+
+                        let htime = document.createElement('p');
+                        htime.innerText = Number(hourlytask.time) / 100 + ":00";
+                        htime.className = 'card-text text-center';
+
+                        let hdesc = document.createElement('h5');
+                        hdesc.innerText = hourlytask.weatherDesc[0].value;
+                        hdesc.className = 'card-text';
+
+                        cardBody.appendChild(htime);
+                        cardBody.appendChild(himage);
+                        cardBody.appendChild(htemp);
+                        cardBody.appendChild(hdesc);
+
+                        card.appendChild(cardBody);
+                        hourlycardContainer.appendChild(card);
+
+                    }
+
+                    const newArrayhourly = data.data.weather[0].hourly;
+                    let initListOfTaskshourly = () => {
+                        if (hourlycardContainer) {
+                            document.getElementById('hourly').replaceWith(hourlycardContainer);
+                            return;
+                        }
+
+                        hourlycardContainer = document.getElementById('hourly');
+                        newArrayhourly.forEach((hourlytask) => {
+                            createhourlyTaskCard(hourlytask);
+                        });
+                    };
+
+                    initListOfTaskshourly();
+
+
+                })
+                .catch(error => {
+                    document.getElementById("loc").innerHTML = (error);
+                })
+        }
+    </script>
+</body>
+
+</html>
