@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+  <style>
+    .input-hidden {
+      position: absolute;
+      left: -9999px;
+    }
+
+    .cimage {
+      height: 450px;
+      width: 600px;
+      background-size: cover;
+    }
+
+    .fit {
+      background-size: cover;
+    }
+
+    input[type=radio]:checked+label>img {
+      border: 1px solid #fff;
+      box-shadow: 5px 5px 15px 5px #FF8080, -9px 5px 15px 5px #FFE488, -7px -5px 15px 5px #8CFF85, 12px -5px 15px 5px #80C7FF, 12px 10px 15px 7px #E488FF, -10px 10px 15px 7px #FF616B, -10px -7px 27px 1px #8E5CFF, -16px -15px 0px -30px rgba(255, 48, 157, 0);
+    }
+
+    input[type=radio]+label>img {
+      border: 1px dashed #444;
+      width: 150px;
+      height: 300px;
+      transition: 500ms all;
+    }
+
+    input[type=radio]:checked+label>img {
+      transform:
+        rotateZ(-10deg) rotateX(10deg);
+    }
+  </style>
+  <title>Fight World</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Projects</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="jsclock.html">jsclock</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="weatherapp.html">Weather</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="list.html">To-Do List</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Other Projects
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="anicar.html">Animated Car</a></li>
+              <li><a class="dropdown-item" href="game.html">Game</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+          </li>
+        </ul>
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <div class="welcome">
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+          aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+          aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+          aria-label="Slide 3"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="c1.png" class="d-block w-100 cimage" alt="...">
+        </div>
+        <div class="carousel-item">
+          <img src="c2.png" class="d-block w-100 cimage" alt="...">
+        </div>
+        <div class="carousel-item">
+          <img src="c3.png" class="d-block w-100 cimage" alt="...">
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+  <br><br>
+  <h1 class="text-center">Welcome to Fight World!</h1>
+  <br>
+  <h2 class="text-center">Choose your Gaming Background</h2>
+  <div class="container bg-light">
+    <div class="bg w-50 mx-auto my-10">
+      <input type="radio" name="bg" id="bg1" class="input-hidden " />
+      <label for="bg1">
+        <img src="bg1.jpg" class="fit" alt="" />
+      </label>
+      <input type="radio" name="bg" id="bg2" class="input-hidden " />
+      <label for="bg2">
+        <img src="bg2.jpg" class="fit" alt="" />
+      </label>
+      <input type="radio" name="bg" id="bg3" class="input-hidden " />
+      <label for="bg3">
+        <img src="bg3.jpg" class="fit" alt="" />
+      </label>
+      <input type="radio" name="bg" id="bg4" class="input-hidden " />
+      <label for="bg4">
+        <img src="bg4.jpg" class="fit" alt="" />
+      </label>
+    </div>
+    <br><br>
+    <div class="container text-center ">
+      <button type="button" class="btn btn-outline-info" onclick="displayBgValue()">
+        Okay
+      </button>
+    </div>
+    <br>
+    <br>
+    <h2 class="text-center">Choose your Character</h2><br>
+
+    <div class="players w-50 mx-auto ">
+      <input type="radio" name="player" id="player1" class="input-hidden " />
+      <label for="player1">
+        <img src="player1.png" class="fit" alt="" />
+      </label>
+      <input type="radio" name="player" id="player2" class="input-hidden " />
+      <label for="player2">
+        <img src="player2.png" class="fit" alt="" />
+      </label>
+      <input type="radio" name="player" id="player3" class="input-hidden" />
+      <label for="player3">
+        <img src="player3.png" class="fit" alt="" />
+      </label>
+      <input type="radio" name="player" id="player4" class="input-hidden" />
+      <label for="player4">
+        <img src="player4.png" class="fit" alt="" />
+      </label>
+
+    </div>
+    <br><br>
+    <div class="container text-center ">
+      <button type="button" class="btn btn-outline-info" onclick="displayPlayerValue()">
+        Okay
+      </button>
+    </div>
+
+    <br>
+    <br>
+    <h2 class="text-center">Choose your Opponent</h2><br>
+    <div class="obstacles w-50 mx-auto">
+      <input type="radio" name="obstacle" id="att1" class="input-hidden" />
+      <label for="att1">
+        <img src="att1.png" class="fit" alt="" />
+      </label>
+      <input type="radio" name="obstacle" id="att2" class="input-hidden" />
+      <label for="att2">
+        <img src="att2.png" class="fit" alt="" />
+      </label>
+      <input type="radio" name="obstacle" id="att3" class="input-hidden" />
+      <label for="att3">
+        <img src="att3.png" class="fit" alt="" />
+      </label>
+      <input type="radio" name="obstacle" id="att4" class="input-hidden" />
+      <label for="att4">
+        <img src="att4.png" class="fit" alt="" />
+      </label>
+    </div>
+    <br><br>
+    <div class="container text-center">
+      <button type="button" class="btn btn-outline-info" onclick="displayObstacleValue()">
+        Okay
+      </button>
+    </div>
+    <br><br>
+    <div class="text-center">
+      <a id="elem" class="btn btn-success" href="game.html" role="button">Let's Play</a>
+    </div>
+
+  </div>
+  <br><br>
+  <!-- Optional JavaScript; choose one of the two! -->
+
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+    crossorigin="anonymous"></script>
+
+  <!-- Option 2: Separate Popper and Bootstrap JS -->
+  <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+    -->
+  <script>
+    function displayBgValue() {
+      var ele = document.getElementsByName('bg');
+
+      for (i = 0; i < ele.length; i++) {
+        if (ele[i].checked)
+          localStorage.setItem("bgname", ele[i].id);
+      }
+    }
+    function displayPlayerValue() {
+      var ele = document.getElementsByName('player');
+
+      for (i = 0; i < ele.length; i++) {
+        if (ele[i].checked)
+          localStorage.setItem("playername", ele[i].id);
+      }
+    }
+    function displayObstacleValue() {
+      var ele = document.getElementsByName('obstacle');
+
+      for (i = 0; i < ele.length; i++) {
+        if (ele[i].checked)
+          localStorage.setItem("obstaclename", ele[i].id);
+      }
+    }
+    document.getElementById('elem').requestFullscreen();
+  </script>
+</body>
+
+</html>
